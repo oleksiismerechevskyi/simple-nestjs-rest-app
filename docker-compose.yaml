@@ -1,0 +1,40 @@
+version: '3'
+services:
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PORT=3000
+  #     - DB_HOST=localhost
+  #     - DB_PORT=5432
+  #     - DB_USER=postgres
+  #     - DB_PW=crudjs
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - postgres
+  #   links:
+  #     - postgres:postgres
+  #   volumes:
+  #     - .:/usr/app
+  #     - /usr/app/node_modules
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+    - 5432:5432
+    environment:
+      - POSTGRES_DB=tasks
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=crudjs
+      - POSTGRES_HOST=localhost
+      - POSTGRES_PORT=5432
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+        - 8080:8080
